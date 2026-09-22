@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import projects from '../data/projects';
 import CtaBand from '../components/CtaBand';
 import styles from './RealisationDetail.module.css';
