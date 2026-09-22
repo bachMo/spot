@@ -1,0 +1,84 @@
+.band {
+  background: var(--vert);
+  padding: 56px 48px;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.text h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 5px;
+}
+
+.text p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.btnJaune {
+  background: var(--jaune);
+  color: var(--vert);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: var(--r);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.18s;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+
+.btnJaune:hover {
+  opacity: 0.88;
+}
+
+.btnOutline {
+  display: inline-block;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 11px 22px;
+  border-radius: var(--r);
+  transition: border-color 0.18s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btnOutline:hover {
+  border-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .band {
+    padding: 40px 24px;
+  }
+  .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .btns {
+    justify-content: center;
+  }
+}

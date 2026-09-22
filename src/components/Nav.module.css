@@ -1,0 +1,161 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--vert);
+  height: 62px;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  color: #fff;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #6FCF78;
+}
+
+.logo sup {
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  vertical-align: super;
+  margin-left: 2px;
+  font-family: 'Inter', sans-serif;
+}
+
+.links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.link {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  transition: color 0.18s;
+  text-decoration: none;
+}
+
+.link:hover,
+.active {
+  color: #fff;
+}
+
+.devis {
+  background: var(--jaune);
+  color: var(--vert);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: var(--r);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.18s;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+
+.devis:hover {
+  opacity: 0.88;
+}
+
+/* Hamburger */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  background: none;
+  border: none;
+}
+
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.28s;
+}
+
+.burgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+.burgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile menu */
+.mobileMenu {
+  display: none;
+  position: fixed;
+  top: 62px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--vert);
+  z-index: 199;
+  flex-direction: column;
+  padding: 28px;
+  overflow-y: auto;
+}
+
+.mobileMenuOpen {
+  display: flex;
+}
+
+.mobileLink {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.mobileLink:hover {
+  color: #fff;
+}
+
+.mobileMenu .devis {
+  margin-top: 24px;
+  text-align: center;
+  padding: 14px;
+  font-size: 15px;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    padding: 0 24px;
+  }
+  .links {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo {
+    font-size: 22px;
+  }
+}
