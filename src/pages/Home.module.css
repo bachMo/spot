@@ -403,11 +403,16 @@
 }
 
 @media (max-width: 560px) {
-  .heroLine1, .heroLine2, .heroLine3 { font-size: clamp(40px, 13vw, 72px); }
+  .heroLine1, .heroLine2, .heroLine3 { font-size: clamp(36px, 10vw, 56px); }
   .heroSub { font-size: 14px; }
   .heroCtas { gap: 8px; }
   .heroBtn, .heroLink { padding: 12px 20px; font-size: 13px; }
   .whyGrid { grid-template-columns: 1fr; }
   .statsRow { grid-template-columns: repeat(2, 1fr); }
   .sectionH2 { font-size: clamp(24px, 7vw, 36px); }
+}
+
+@media (max-width: 400px) {
+  .heroLine1, .heroLine2, .heroLine3 { font-size: clamp(30px, 9vw, 44px); }
+  .heroInner { padding-top: 88px; }
 }
