@@ -20,7 +20,16 @@
   box-shadow: var(--shadow);
 }
 
+.headerOpen {
+  background: var(--bg);
+  border-bottom-color: var(--line);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
 .inner {
+  position: relative;
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
@@ -97,6 +106,8 @@
   color: var(--txt2);
   background: var(--bg2);
   border: 1px solid var(--line);
+  padding: 0;
+  flex-shrink: 0;
   transition: color var(--t), background var(--t), border-color var(--t);
 }
 
@@ -185,6 +196,11 @@
 
 @media (max-width: 768px) {
   .nav, .actions { display: none; }
-  .themeToggle { display: flex; }
+  .themeToggle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
   .burger { display: flex; }
 }

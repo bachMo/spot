@@ -54,50 +54,52 @@ export default function Nav() {
   const go = (path) => { setOpen(false); navigate(path); };
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-      <div className={styles.inner}>
-        <button className={styles.logoBtn} onClick={() => go('/')} aria-label="Accueil SPOT">
-          <span className={styles.logoMark}>S</span>
-          <span className={styles.logoWord}>POT</span>
-        </button>
+    <>
+      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${open ? styles.headerOpen : ''}`}>
+        <div className={styles.inner}>
+          <button className={styles.logoBtn} onClick={() => go('/')} aria-label="Accueil SPOT">
+            <span className={styles.logoMark}>S</span>
+            <span className={styles.logoWord}>POT</span>
+          </button>
 
-        <nav className={styles.nav} aria-label="Navigation principale">
-          {LINKS.map(({ to, label, end }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={end}
-              className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
-            >
-              {label}
-            </NavLink>
-          ))}
-        </nav>
+          <nav className={styles.nav} aria-label="Navigation principale">
+            {LINKS.map(({ to, label, end }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={end}
+                className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+              >
+                {label}
+              </NavLink>
+            ))}
+          </nav>
 
-        <button
-          className={styles.themeToggle}
-          onClick={toggle}
-          aria-label={dark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-          title={dark ? 'Mode clair' : 'Mode sombre'}
-        >
-          {dark ? <SunIcon /> : <MoonIcon />}
-        </button>
+          <button
+            className={styles.themeToggle}
+            onClick={toggle}
+            aria-label={dark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+            title={dark ? 'Mode clair' : 'Mode sombre'}
+          >
+            {dark ? <SunIcon /> : <MoonIcon />}
+          </button>
 
-        <div className={styles.actions}>
-          <button className={styles.cta} onClick={() => go('/contact')}>
-            Devis gratuit
+          <div className={styles.actions}>
+            <button className={styles.cta} onClick={() => go('/contact')}>
+              Devis gratuit
+            </button>
+          </div>
+
+          <button
+            className={`${styles.burger} ${open ? styles.burgerOpen : ''}`}
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={open}
+          >
+            <span /><span /><span />
           </button>
         </div>
-
-        <button
-          className={`${styles.burger} ${open ? styles.burgerOpen : ''}`}
-          onClick={() => setOpen(!open)}
-          aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
-          aria-expanded={open}
-        >
-          <span /><span /><span />
-        </button>
-      </div>
+      </header>
 
       <div className={`${styles.drawer} ${open ? styles.drawerOpen : ''}`} aria-hidden={!open}>
         <nav className={styles.drawerNav}>
@@ -111,6 +113,6 @@ export default function Nav() {
           </button>
         </nav>
       </div>
-    </header>
+    </>
   );
 }
