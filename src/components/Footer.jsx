@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 const LINKS = [
-  { label: 'Accueil', to: '/' },
-  { label: 'Services', to: '/services' },
-  { label: 'Réalisations', to: '/realisations' },
-  { label: 'À propos', to: '/a-propos' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Accueil', to: '/#top' },
+  { label: 'Services', to: '/services#top' },
+  { label: 'Réalisations', to: '/realisations#top' },
+  { label: 'À propos', to: '/a-propos#top' },
+  { label: 'Contact', to: '/contact#top' },
 ];
 
 const SERVICES = [
@@ -57,7 +57,7 @@ export default function Footer() {
                 <a href="tel:+221777886318" className={styles.colLink}>+221 77 788 63 18</a>
               </li>
               <li>
-                <a href="mailto:hamidousy96@gmail.com" className={styles.colLink}>hamidousy96@gmail.com</a>
+                <a href="mailto:contact@spot-senegal.com" className={styles.colLink}>contact@spot-senegal.com</a>
               </li>
             </ul>
             <Link to="/contact" className={styles.footerCta}>Demander un devis</Link>

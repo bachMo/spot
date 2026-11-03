@@ -8,7 +8,7 @@ export function ThemeProvider({ children }) {
       const saved = localStorage.getItem('spot-theme');
       if (saved) return saved === 'dark';
     } catch {}
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return false;
   });
 
   useEffect(() => {
