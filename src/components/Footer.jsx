@@ -57,7 +57,7 @@ export default function Footer() {
                 <a href="tel:+221777886318" className={styles.colLink}>+221 77 788 63 18</a>
               </li>
               <li>
-                <a href="mailto:contact@spot-senegal.com" className={styles.colLink}>contact@spot-senegal.com</a>
+                <a href="mailto:hamidousy96@gmail.com" className={styles.colLink}>hamidousy96@gmail.com</a>
               </li>
             </ul>
             <Link to="/contact" className={styles.footerCta}>Demander un devis</Link>

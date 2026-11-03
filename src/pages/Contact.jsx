@@ -153,7 +153,7 @@ export default function Contact() {
               </div>
               <div className={styles.infoBlock}>
                 <div className={styles.infoLabel}>Email</div>
-                <a href="mailto:contact@spot-senegal.com" className={styles.infoValue}>contact@spot-senegal.com</a>
+                <a href="mailto:hamidousy96@gmail.com" className={styles.infoValue}>hamidousy96@gmail.com</a>
               </div>
               <div className={styles.infoBlock}>
                 <div className={styles.infoLabel}>Zone d'intervention</div>
