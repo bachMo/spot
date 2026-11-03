@@ -74,16 +74,16 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className={styles.actions}>
-          <button
-            className={styles.themeToggle}
-            onClick={toggle}
-            aria-label={dark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-            title={dark ? 'Mode clair' : 'Mode sombre'}
-          >
-            {dark ? <SunIcon /> : <MoonIcon />}
-          </button>
+        <button
+          className={styles.themeToggle}
+          onClick={toggle}
+          aria-label={dark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+          title={dark ? 'Mode clair' : 'Mode sombre'}
+        >
+          {dark ? <SunIcon /> : <MoonIcon />}
+        </button>
 
+        <div className={styles.actions}>
           <button className={styles.cta} onClick={() => go('/contact')}>
             Devis gratuit
           </button>
@@ -108,10 +108,6 @@ export default function Nav() {
           ))}
           <button className={styles.drawerCta} onClick={() => go('/contact')}>
             Devis gratuit
-          </button>
-          <button className={styles.drawerTheme} onClick={toggle}>
-            {dark ? <SunIcon /> : <MoonIcon />}
-            {dark ? 'Mode clair' : 'Mode sombre'}
           </button>
         </nav>
       </div>
