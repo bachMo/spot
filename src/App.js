@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './ThemeContext';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -12,27 +13,29 @@ import Factures from './pages/Factures';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/factures" element={<Factures />} />
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/factures" element={<Factures />} />
 
-        <Route path="/*" element={
-          <>
-            <Nav />
-            <Routes>
-              <Route path="/"                      element={<Home />} />
-              <Route path="/services"              element={<Services />} />
-              <Route path="/realisations"          element={<Realisations />} />
-              <Route path="/realisations/:id"      element={<RealisationDetail />} />
-              <Route path="/a-propos"              element={<About />} />
-              <Route path="/about"                 element={<About />} />
-              <Route path="/contact"               element={<Contact />} />
-            </Routes>
-            <Footer />
-          </>
-        } />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/*" element={
+            <>
+              <Nav />
+              <Routes>
+                <Route path="/"                      element={<Home />} />
+                <Route path="/services"              element={<Services />} />
+                <Route path="/realisations"          element={<Realisations />} />
+                <Route path="/realisations/:id"      element={<RealisationDetail />} />
+                <Route path="/a-propos"              element={<About />} />
+                <Route path="/about"                 element={<About />} />
+                <Route path="/contact"               element={<Contact />} />
+              </Routes>
+              <Footer />
+            </>
+          } />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

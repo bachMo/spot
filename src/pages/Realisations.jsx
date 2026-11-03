@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageHero from '../components/PageHero';
+import ProjectIllustration from '../components/ProjectIllustration';
 import { PROJECTS, DOMAINES } from '../data/projects';
 import styles from './Realisations.module.css';
 
@@ -51,9 +52,11 @@ export default function Realisations() {
                   <span className={styles.cardDomain}>{DOMAINES[p.domaine]?.label}</span>
                   <span className={styles.cardYear}>{p.annee}</span>
                 </div>
-                <div className={styles.cardImg} aria-hidden="true">
-                  <div className={styles.cardImgInner} />
-                </div>
+                <ProjectIllustration
+                  domaine={p.domaine}
+                  id={p.id}
+                  className={styles.cardImg}
+                />
                 <div className={styles.cardBody}>
                   <div className={styles.cardTitle}>{p.titre}</div>
                   <div className={styles.cardLieu}>{p.lieu}</div>

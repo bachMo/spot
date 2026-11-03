@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PROJECTS, DOMAINES } from '../data/projects';
 import CtaBand from '../components/CtaBand';
+import ProjectIllustration from '../components/ProjectIllustration';
 import styles from './RealisationDetail.module.css';
 
 export default function RealisationDetail() {
@@ -43,7 +44,11 @@ export default function RealisationDetail() {
             <div className={styles.heroSurface}>{project.surface}</div>
           )}
         </div>
-        <div className={styles.heroImg} aria-hidden="true" />
+        <ProjectIllustration
+          domaine={project.domaine}
+          id={`hero-${project.id}`}
+          className={styles.heroImg}
+        />
       </div>
 
       <div className={styles.layout}>
@@ -102,7 +107,11 @@ export default function RealisationDetail() {
                   className={styles.relatedCard}
                   onClick={() => navigate(`/realisations/${p.id}`)}
                 >
-                  <div className={styles.relatedCardImg} aria-hidden="true" />
+                  <ProjectIllustration
+                    domaine={p.domaine}
+                    id={`rel-${p.id}`}
+                    className={styles.relatedCardImg}
+                  />
                   <div className={styles.relatedCardTitle}>{p.titre}</div>
                   <div className={styles.relatedCardLieu}>{p.lieu} · {p.annee}</div>
                 </button>

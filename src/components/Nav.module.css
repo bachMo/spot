@@ -8,15 +8,16 @@
   height: 68px;
   display: flex;
   align-items: center;
-  transition: background var(--t), border-color var(--t);
+  transition: background var(--t), border-color var(--t), backdrop-filter var(--t);
   border-bottom: 1px solid transparent;
 }
 
 .scrolled {
-  background: rgba(10, 10, 15, 0.92);
+  background: var(--nav-bg-scroll);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom-color: var(--line);
+  box-shadow: var(--shadow);
 }
 
 .inner {
@@ -74,16 +75,42 @@
   background: var(--bg3);
 }
 
+:root[data-theme="light"] .active {
+  color: var(--orange);
+  background: var(--orange-soft);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.themeToggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--txt2);
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  transition: color var(--t), background var(--t), border-color var(--t);
+}
+
+.themeToggle:hover { color: var(--orange); border-color: var(--orange); }
+
 .cta {
   font-size: 13px;
   font-weight: 600;
-  color: var(--white);
+  color: #fff;
   background: var(--orange);
   padding: 9px 20px;
   border-radius: var(--r);
   transition: background var(--t), transform var(--t);
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .cta:hover { background: var(--orange-h); transform: translateY(-1px); }
@@ -138,13 +165,13 @@
   transition: color var(--t);
 }
 
-.drawerLink:hover { color: var(--white); }
+.drawerLink:hover { color: var(--txt); }
 
 .drawerCta {
   margin-top: 24px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--white);
+  color: #fff;
   background: var(--orange);
   padding: 14px 24px;
   border-radius: var(--r);
@@ -154,7 +181,21 @@
 
 .drawerCta:hover { background: var(--orange-h); }
 
+.drawerTheme {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--txt2);
+  padding: 10px 0;
+  transition: color var(--t);
+}
+
+.drawerTheme:hover { color: var(--orange); }
+
 @media (max-width: 768px) {
-  .nav, .cta { display: none; }
+  .nav, .actions { display: none; }
   .burger { display: flex; }
 }

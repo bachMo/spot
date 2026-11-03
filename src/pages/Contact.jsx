@@ -33,6 +33,8 @@ export default function Contact() {
           Service: form.service,
           Message: form.message,
           _subject: `Demande SPOT — ${form.service || 'Non précisé'}`,
+          _replyto: form.email,
+          _to: 'hamidousy96@gmail.com',
         }),
       });
       setSent(true);
