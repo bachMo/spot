@@ -1,125 +1,138 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import projects from '../data/projects';
+import { useParams, Link } from 'react-router-dom';
 import CtaBand from '../components/CtaBand';
+import { PROJECTS, DOMAINES } from '../data/projects';
 import styles from './RealisationDetail.module.css';
 
 export default function RealisationDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const p = projects.find(pr => pr.id === id);
+  const project = PROJECTS.find((p) => p.id === id);
 
-  if (!p) return (
-    <div className={styles.notFound}>
-      <p>Réalisation introuvable.</p>
-      <button onClick={() => navigate('/realisations')} className={styles.back}>
-        ← Retour aux réalisations
-      </button>
-    </div>
-  );
+  if (!project) {
+    return (
+      <main className={styles.notFound}>
+        <div className={styles.notFoundInner}>
+          <div className={styles.notFoundCode}>404</div>
+          <div className={styles.notFoundMsg}>Projet introuvable.</div>
+          <Link to="/realisations" className={styles.backBtn}>← Retour aux réalisations</Link>
+        </div>
+      </main>
+    );
+  }
+
+  const domaine = DOMAINES[project.domaine];
+  const others = PROJECTS.filter((p) => p.id !== project.id && p.domaine === project.domaine).slice(0, 3);
 
   return (
     <main>
-      {/* HEADER VERT */}
-      <div className={styles.top}>
-        <div className={styles.topInner}>
-          <button className={styles.backBtn} onClick={() => navigate('/realisations')}>
-            ← Retour aux réalisations
-          </button>
-          <div className={styles.cat}>{p.catLabel}</div>
-          <h1 className={styles.h1}>{p.titleFull}</h1>
-          <div className={styles.meta}>
-            <div className={styles.metaItem}>📍 <strong>{p.lieu}</strong></div>
-            <div className={styles.metaItem}>📅 <strong>{p.date}</strong></div>
-            <div className={styles.metaItem}>⏱ Durée : <strong>{p.duree}</strong></div>
-            <div className={styles.metaItem}>💰 Budget : <strong>{p.budget}</strong></div>
+      <div className={styles.hero}>
+        <div className={styles.heroInner}>
+          <Link to="/realisations" className={styles.back}>← Toutes les réalisations</Link>
+          <div className={styles.heroTag} style={{ background: domaine?.color }}>{domaine?.label}</div>
+          <h1 className={styles.heroTitle}>{project.titre}</h1>
+          <div className={styles.heroMeta}>
+            <span>{project.lieu}</span>
+            <span>·</span>
+            <span>{project.annee}</span>
+            {project.surface !== '—' && (
+              <>
+                <span>·</span>
+                <span>{project.surface}</span>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* GALERIE */}
-      <div className={styles.gallery}>
-        <div className={styles.galleryInner}>
-          <div className={styles.imgMain}>{p.emoji}</div>
-          <div className={styles.imgSide}>
-            <div className={styles.imgSm}>{p.e2}</div>
-            <div className={styles.imgSm}>{p.e3}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* CORPS */}
       <div className={styles.body}>
         <div className={styles.bodyInner}>
-          {/* Colonne principale */}
-          <div className={styles.main}>
-            <h2 className={styles.st}>Contexte et enjeux</h2>
-            <p className={styles.txt}>{p.contexte}</p>
-            <div className={styles.challenge}>
-              <p dangerouslySetInnerHTML={{ __html: p.challenge }} />
+          <div className={styles.mainCol}>
+            <div className={styles.imgBlock}>
+              <div className={styles.imgPlaceholder}>
+                {project.domaine === 'energie' && '⚡'}
+                {project.domaine === 'clim' && '❄️'}
+                {project.domaine === 'plomb' && '🔧'}
+                {project.domaine === 'btp' && '🏗️'}
+              </div>
             </div>
 
-            <h2 className={styles.st}>Déroulement du chantier</h2>
-            <div className={styles.steps}>
-              {p.steps.map((s, i) => (
-                <div key={i} className={styles.step}>
-                  <div className={styles.stepN}>{i + 1}</div>
-                  <div className={styles.stepB}>
-                    <strong>{s.title}</strong> — {s.desc}
-                  </div>
-                </div>
-              ))}
+            <div className={styles.section}>
+              <div className={styles.sectionLabel}>Présentation du projet</div>
+              <p className={styles.sectionText}>{project.desc}</p>
             </div>
 
-            <h2 className={styles.st}>Matériel utilisé</h2>
-            <div className={styles.matGrid}>
-              {p.materiel.map((m) => (
-                <div key={m.label} className={styles.matItem}>
-                  <span className={styles.matEmoji}>{m.emoji}</span>
-                  <span className={styles.matLabel}>{m.label}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className={styles.cta}>
-              <button className={styles.btnDark} onClick={() => navigate('/contact')}>
-                Démarrer un projet similaire →
-              </button>
+            <div className={styles.section}>
+              <div className={styles.sectionLabel}>Détails de l'intervention</div>
+              <p className={styles.sectionText}>{project.details}</p>
             </div>
           </div>
 
-          {/* Sidebar */}
           <aside className={styles.sidebar}>
-            <div className={styles.infoCard}>
-              <div className={styles.cardHeader}>📋 Fiche technique</div>
-              <div className={styles.cardBody}>
-                {p.fiche.map(({ label, value }) => (
-                  <div key={label} className={styles.row}>
-                    <span className={styles.rowLabel}>{label}</span>
-                    <span className={styles.rowVal}>{value}</span>
-                  </div>
+            <div className={styles.sideCard}>
+              <div className={styles.sideTitle}>Informations</div>
+              <div className={styles.sideRow}>
+                <span className={styles.sideKey}>Lieu</span>
+                <span className={styles.sideVal}>{project.lieu}</span>
+              </div>
+              <div className={styles.sideRow}>
+                <span className={styles.sideKey}>Année</span>
+                <span className={styles.sideVal}>{project.annee}</span>
+              </div>
+              {project.surface !== '—' && (
+                <div className={styles.sideRow}>
+                  <span className={styles.sideKey}>Surface</span>
+                  <span className={styles.sideVal}>{project.surface}</span>
+                </div>
+              )}
+              <div className={styles.sideRow}>
+                <span className={styles.sideKey}>Domaine</span>
+                <span className={styles.sideVal}>{domaine?.label}</span>
+              </div>
+            </div>
+
+            <div className={styles.sideCard}>
+              <div className={styles.sideTitle}>Tags</div>
+              <div className={styles.tagList}>
+                {project.tags.map((t) => (
+                  <span key={t} className={styles.tag}>{t}</span>
                 ))}
               </div>
             </div>
 
-            <div className={styles.infoCard}>
-              <div className={styles.cardHeader}>📈 Résultats obtenus</div>
-              <div className={styles.kpiWrap}>
-                {p.kpi.map(({ n, label }) => (
-                  <div key={label} className={styles.kpiItem}>
-                    <div className={styles.kpiN}>{n}</div>
-                    <div className={styles.kpiL}>{label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <Link to="/contact" className={styles.contactBtn}>
+              Discuter d'un projet similaire →
+            </Link>
           </aside>
         </div>
       </div>
 
+      {others.length > 0 && (
+        <div className={styles.related}>
+          <div className={styles.relatedInner}>
+            <div className={styles.relatedLabel}>Projets similaires</div>
+            <div className={styles.relatedGrid}>
+              {others.map((p) => (
+                <Link key={p.id} to={`/realisations/${p.id}`} className={styles.relCard}>
+                  <div className={styles.relImg}>
+                    {p.domaine === 'energie' && '⚡'}
+                    {p.domaine === 'clim' && '❄️'}
+                    {p.domaine === 'plomb' && '🔧'}
+                    {p.domaine === 'btp' && '🏗️'}
+                  </div>
+                  <div className={styles.relBody}>
+                    <div className={styles.relTitle}>{p.titre}</div>
+                    <div className={styles.relMeta}>{p.lieu} · {p.annee}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <CtaBand
-        title="Un projet similaire ? Parlons-en."
-        subtitle="Devis gratuit sous 48 heures."
+        title="Vous avez un projet similaire ?"
+        subtitle="Contactez-nous pour une étude technique gratuite."
       />
     </main>
   );

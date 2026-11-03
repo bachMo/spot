@@ -14,10 +14,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Page factures cachée — pas de nav ni footer */}
         <Route path="/factures" element={<Factures />} />
 
-        {/* Pages publiques avec nav et footer */}
         <Route path="/*" element={
           <>
             <Nav />
@@ -26,6 +24,7 @@ function App() {
               <Route path="/services"              element={<Services />} />
               <Route path="/realisations"          element={<Realisations />} />
               <Route path="/realisations/:id"      element={<RealisationDetail />} />
+              <Route path="/a-propos"              element={<About />} />
               <Route path="/about"                 element={<About />} />
               <Route path="/contact"               element={<Contact />} />
             </Routes>
