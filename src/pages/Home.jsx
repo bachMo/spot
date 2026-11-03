@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CtaBand from '../components/CtaBand';
 import styles from './Home.module.css';
 
