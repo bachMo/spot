@@ -1,7 +1,4 @@
-.section {
-  padding: 80px 0 96px;
-  background: var(--blanc);
-}
+.section { padding: 64px 0 96px; background: var(--bg); }
 
 .inner {
   max-width: var(--max);
@@ -9,135 +6,100 @@
   padding: 0 var(--gutter);
 }
 
-.tabs {
+.tabBar {
   display: flex;
-  gap: 4px;
-  margin-bottom: 40px;
-  background: var(--gris);
-  border-radius: var(--radius);
-  padding: 6px;
-  flex-wrap: wrap;
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  padding: 12px 16px;
-  border-radius: 8px;
-  transition: background var(--transition), color var(--transition);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--t2);
-  min-width: 140px;
-  cursor: pointer;
-}
-
-.tab:hover { background: var(--blanc); color: var(--t1); }
-
-.tabActive {
-  background: var(--bleu) !important;
-  color: #fff !important;
-}
-
-.tabIcon { font-size: 18px; }
-.tabLabel { font-weight: 600; font-size: 13px; }
-
-.panel {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 56px;
-  align-items: flex-start;
-}
-
-.panelLeft {
-  position: sticky;
-  top: 88px;
-}
-
-.panelIconWrap {
-  font-size: 40px;
-  margin-bottom: 16px;
-}
-
-.panelTitle {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 32px;
-  color: var(--t1);
-  margin-bottom: 12px;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-.panelDesc {
-  font-size: 15px;
-  color: var(--t2);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-
-.panelCta {
-  display: inline-block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  background: var(--orange);
-  color: #fff;
-  padding: 11px 24px;
-  border-radius: var(--radius-sm);
-  transition: background var(--transition);
-}
-
-.panelCta:hover { background: var(--orange-m); }
-
-.itemList {
-  display: flex;
-  flex-direction: column;
+  border-bottom: 1px solid var(--line);
   gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 48px;
 }
 
-.item {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--bord);
-}
+.tabBar::-webkit-scrollbar { display: none; }
 
-.item:last-child { border-bottom: none; }
-
-.itemHeader {
+.tabBtn {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--txt2);
+  padding: 16px 24px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color var(--t), border-color var(--t);
 }
 
-.itemDot {
+.tabBtn:hover { color: var(--txt); }
+
+.tabActive {
+  color: var(--white);
+  border-bottom-color: var(--orange);
+}
+
+.tabNum {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--txt3);
+  transition: color var(--t);
+}
+
+.tabActive .tabNum { color: var(--orange); }
+
+.panel { animation: fadeIn 0.2s var(--ease); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panelIntro {
+  font-size: 16px;
+  color: var(--txt2);
+  line-height: 1.7;
+  max-width: 680px;
+  margin-bottom: 40px;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--line);
+}
+
+.serviceCard {
+  background: var(--bg1);
+  padding: 32px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: background var(--t);
+}
+
+.serviceCard:hover { background: var(--bg2); }
+
+.serviceDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--orange);
   flex-shrink: 0;
+  margin-top: 6px;
 }
 
-.itemLabel {
-  font-weight: 600;
-  font-size: 15px;
-  color: var(--t1);
+.serviceTitle {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+  margin-bottom: 8px;
 }
 
-.itemDetail {
-  font-size: 14px;
-  color: var(--t2);
-  line-height: 1.65;
-  padding-left: 16px;
-}
+.serviceDesc { font-size: 14px; color: var(--txt2); line-height: 1.65; }
 
-@media (max-width: 900px) {
-  .panel { grid-template-columns: 1fr; gap: 32px; }
-  .panelLeft { position: static; }
-  .tabs { flex-direction: column; }
-  .tab { min-width: unset; }
+@media (max-width: 768px) {
+  .serviceGrid { grid-template-columns: 1fr; }
+  .tabBtn { padding: 14px 16px; font-size: 12px; }
 }

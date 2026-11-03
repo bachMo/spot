@@ -1,183 +1,160 @@
-.nav {
+.header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background: var(--bleu);
+  padding: 0 var(--gutter);
   height: 68px;
   display: flex;
   align-items: center;
-  transition: box-shadow var(--transition);
+  transition: background var(--t), border-color var(--t);
+  border-bottom: 1px solid transparent;
 }
 
-.navScrolled {
-  box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+.scrolled {
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: var(--line);
 }
 
-.navInner {
-  max-width: var(--max);
+.inner {
   width: 100%;
+  max-width: var(--max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
-  gap: 48px;
+  gap: 40px;
 }
 
-.logo {
+.logoBtn {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+  align-items: baseline;
+  gap: 1px;
   flex-shrink: 0;
 }
 
 .logoMark {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--orange);
+  letter-spacing: -0.01em;
+}
+
+.logoWord {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+
+.nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: var(--orange);
-  border-radius: 8px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 18px;
-  color: #fff;
-  letter-spacing: -0.04em;
-}
-
-.logoText {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-.logoSub {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-  line-height: 1;
-  display: block;
-  margin-top: 1px;
-}
-
-.links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex: 1;
+  gap: 2px;
+  margin-left: auto;
 }
 
 .link {
-  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: rgba(255,255,255,0.72);
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  transition: color var(--transition), background var(--transition);
-  letter-spacing: 0.01em;
+  color: var(--txt2);
+  padding: 6px 14px;
+  border-radius: var(--r);
+  transition: color var(--t), background var(--t);
 }
 
-.link:hover, .linkActive {
-  color: #fff;
-  background: rgba(255,255,255,0.10);
+.link:hover { color: var(--txt); }
+
+.active {
+  color: var(--white);
+  background: var(--bg3);
 }
 
-.navCta {
-  margin-left: auto;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.cta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
   background: var(--orange);
-  color: #fff;
-  padding: 9px 22px;
-  border-radius: var(--radius-sm);
-  transition: background var(--transition), transform var(--transition);
+  padding: 9px 20px;
+  border-radius: var(--r);
+  transition: background var(--t), transform var(--t);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.navCta:hover {
-  background: var(--orange-m);
-  transform: translateY(-1px);
-}
+.cta:hover { background: var(--orange-h); transform: translateY(-1px); }
 
 .burger {
   display: none;
   flex-direction: column;
   gap: 5px;
-  padding: 8px;
+  padding: 6px;
   margin-left: auto;
-  cursor: pointer;
 }
 
-.burgerLine {
+.burger span {
+  display: block;
   width: 22px;
   height: 2px;
-  background: #fff;
+  background: var(--txt);
   border-radius: 2px;
-  transition: transform var(--transition), opacity var(--transition);
+  transition: transform var(--t), opacity var(--t);
+  transform-origin: center;
 }
 
-.burgerOpen .burgerLine:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.burgerOpen .burgerLine:nth-child(2) { opacity: 0; }
-.burgerOpen .burgerLine:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.burgerOpen span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burgerOpen span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-.mobileMenu {
-  display: none;
+.drawer {
   position: fixed;
-  top: 68px;
-  left: 0;
-  right: 0;
-  background: var(--bleu);
-  padding: 16px var(--gutter) 24px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  inset: 68px 0 0;
+  background: var(--bg);
+  padding: 32px var(--gutter);
+  transform: translateX(100%);
+  transition: transform 0.3s var(--ease);
   z-index: 99;
 }
 
-.mobileMenuOpen {
+.drawerOpen { transform: translateX(0); }
+
+.drawerNav {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.mobileLink {
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.8);
-  padding: 12px 8px;
-  border-radius: var(--radius-sm);
-  transition: color var(--transition), background var(--transition);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+.drawerLink {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--txt2);
+  text-align: left;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  transition: color var(--t);
 }
 
-.mobileLink:last-child { border-bottom: none; }
+.drawerLink:hover { color: var(--white); }
 
-.mobileCta {
-  margin-top: 12px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.drawerCta {
+  margin-top: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
   background: var(--orange);
-  color: #fff;
-  padding: 12px 22px;
-  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  border-radius: var(--r);
   text-align: center;
+  transition: background var(--t);
 }
 
-@media (max-width: 900px) {
-  .links, .navCta { display: none; }
+.drawerCta:hover { background: var(--orange-h); }
+
+@media (max-width: 768px) {
+  .nav, .cta { display: none; }
   .burger { display: flex; }
 }

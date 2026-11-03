@@ -1,78 +1,61 @@
 .band {
-  background: var(--orange);
-  padding: 64px 0;
+  background: var(--bg1);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 72px var(--gutter);
 }
 
 .inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  flex-wrap: wrap;
 }
-
-.text { flex: 1; min-width: 260px; }
 
 .title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: clamp(28px, 3.5vw, 42px);
-  line-height: 1.08;
-  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3vw, 36px);
+  color: var(--white);
   letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
-.sub {
-  font-size: 16px;
-  color: rgba(255,255,255,0.80);
-  margin-top: 8px;
-  line-height: 1.5;
-}
+.sub { font-size: 15px; color: var(--txt2); }
 
-.actions {
-  display: flex;
-  gap: 12px;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-}
+.actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 
 .btnPrimary {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  background: #fff;
-  color: var(--orange);
-  padding: 13px 28px;
-  border-radius: var(--radius-sm);
-  transition: background var(--transition), transform var(--transition);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--orange);
+  padding: 13px 24px;
+  border-radius: var(--r);
+  transition: background var(--t), transform var(--t);
+  white-space: nowrap;
 }
 
-.btnPrimary:hover { background: var(--orange-l); transform: translateY(-1px); }
+.btnPrimary:hover { background: var(--orange-h); transform: translateY(-1px); }
 
-.btnSecondary {
-  display: flex;
-  align-items: center;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 2px solid rgba(255,255,255,0.5);
-  color: #fff;
-  padding: 11px 24px;
-  border-radius: var(--radius-sm);
-  transition: border-color var(--transition), background var(--transition);
+.btnPhone {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--txt2);
+  border: 1px solid var(--line2);
+  border-radius: var(--r);
+  padding: 13px 20px;
+  transition: color var(--t), border-color var(--t);
+  white-space: nowrap;
 }
 
-.btnSecondary:hover { border-color: #fff; background: rgba(255,255,255,0.10); }
+.btnPhone:hover { color: var(--white); border-color: var(--txt2); }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .inner { flex-direction: column; align-items: flex-start; }
-  .actions { width: 100%; }
-  .btnPrimary, .btnSecondary { flex: 1; justify-content: center; text-align: center; }
+  .actions { flex-direction: column; align-items: stretch; width: 100%; }
+  .btnPrimary, .btnPhone { text-align: center; }
 }

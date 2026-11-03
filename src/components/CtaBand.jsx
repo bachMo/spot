@@ -13,9 +13,9 @@ export default function CtaBand({ title, subtitle }) {
         </div>
         <div className={styles.actions}>
           <button className={styles.btnPrimary} onClick={() => navigate('/contact')}>
-            Demander un devis gratuit
+            Demander un devis
           </button>
-          <a href="tel:+221777886318" className={styles.btnSecondary}>
+          <a href="tel:+221777886318" className={styles.btnPhone}>
             +221 77 788 63 18
           </a>
         </div>

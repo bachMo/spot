@@ -9,6 +9,7 @@ export default function PageHero({ eyebrow, title, subtitle }) {
         <h1 className={styles.title}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
       </div>
+      <div className={styles.grid} aria-hidden="true" />
     </section>
   );
 }

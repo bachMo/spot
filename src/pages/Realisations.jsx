@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PageHero from '../components/PageHero';
-import CtaBand from '../components/CtaBand';
 import { PROJECTS, DOMAINES } from '../data/projects';
 import styles from './Realisations.module.css';
 
 const FILTERS = [
-  { key: 'all', label: 'Tous les projets' },
-  { key: 'energie', label: 'Énergie & Électricité' },
-  { key: 'clim', label: 'Climatisation' },
-  { key: 'plomb', label: 'Plomberie' },
-  { key: 'btp', label: 'BTP' },
+  { id: 'all', label: 'Tous les projets' },
+  { id: 'energie', label: 'Énergie & Électricité' },
+  { id: 'clim', label: 'Climatisation' },
+  { id: 'plomb', label: 'Plomberie & Étanchéité' },
+  { id: 'btp', label: 'BTP' },
 ];
 
 export default function Realisations() {
   const [active, setActive] = useState('all');
+  const navigate = useNavigate();
 
-  const visible = active === 'all'
-    ? PROJECTS
-    : PROJECTS.filter((p) => p.domaine === active);
+  const filtered = active === 'all' ? PROJECTS : PROJECTS.filter((p) => p.domaine === active);
 
   return (
     <main>
       <PageHero
         eyebrow="Réalisations"
-        title="250+ projets livrés à travers le Sénégal."
-        subtitle="Énergie solaire, électricité, climatisation, plomberie, BTP — nos équipes interviennent sur tous types de chantiers."
+        title="250+ projets livrés."
+        subtitle="De Dakar à Diamniadio — chantiers réels, équipes terrain, délais tenus."
       />
 
       <section className={styles.section}>
@@ -33,9 +31,9 @@ export default function Realisations() {
           <div className={styles.filterBar}>
             {FILTERS.map((f) => (
               <button
-                key={f.key}
-                className={`${styles.filterBtn} ${active === f.key ? styles.filterActive : ''}`}
-                onClick={() => setActive(f.key)}
+                key={f.id}
+                className={`${styles.filterBtn} ${active === f.id ? styles.filterActive : ''}`}
+                onClick={() => setActive(f.id)}
               >
                 {f.label}
               </button>
@@ -43,49 +41,39 @@ export default function Realisations() {
           </div>
 
           <div className={styles.grid}>
-            {visible.map((p) => (
-              <Link key={p.id} to={`/realisations/${p.id}`} className={styles.card}>
-                <div className={styles.cardImg}>
-                  <div className={styles.cardImgInner}>
-                    <div className={styles.cardPlaceholder}>
-                      {p.domaine === 'energie' && '⚡'}
-                      {p.domaine === 'clim' && '❄️'}
-                      {p.domaine === 'plomb' && '🔧'}
-                      {p.domaine === 'btp' && '🏗️'}
-                    </div>
-                  </div>
-                  <div className={styles.cardTag} style={{ background: DOMAINES[p.domaine]?.color }}>
-                    {DOMAINES[p.domaine]?.label}
-                  </div>
+            {filtered.map((p) => (
+              <button
+                key={p.id}
+                className={styles.card}
+                onClick={() => navigate(`/realisations/${p.id}`)}
+              >
+                <div className={styles.cardTop}>
+                  <span className={styles.cardDomain}>{DOMAINES[p.domaine]?.label}</span>
+                  <span className={styles.cardYear}>{p.annee}</span>
+                </div>
+                <div className={styles.cardImg} aria-hidden="true">
+                  <div className={styles.cardImgInner} />
                 </div>
                 <div className={styles.cardBody}>
-                  <div className={styles.cardMeta}>
-                    <span>{p.lieu}</span>
-                    <span>{p.annee}</span>
-                  </div>
                   <div className={styles.cardTitle}>{p.titre}</div>
-                  <div className={styles.cardDesc}>{p.desc}</div>
+                  <div className={styles.cardLieu}>{p.lieu}</div>
+                  <p className={styles.cardDesc}>{p.desc}</p>
                   <div className={styles.cardTags}>
                     {p.tags.map((t) => (
-                      <span key={t} className={styles.tag}>{t}</span>
+                      <span key={t} className={styles.cardTag}>{t}</span>
                     ))}
                   </div>
-                  <div className={styles.cardCta}>Voir le projet →</div>
+                  <div className={styles.cardArrow}>Voir le projet →</div>
                 </div>
-              </Link>
+              </button>
             ))}
           </div>
 
-          {visible.length === 0 && (
-            <div className={styles.empty}>Aucun projet dans cette catégorie pour le moment.</div>
+          {filtered.length === 0 && (
+            <div className={styles.empty}>Aucun projet dans cette catégorie.</div>
           )}
         </div>
       </section>
-
-      <CtaBand
-        title="Votre projet rejoint bientôt cette liste."
-        subtitle="Contactez-nous pour une étude technique gratuite."
-      />
     </main>
   );
 }

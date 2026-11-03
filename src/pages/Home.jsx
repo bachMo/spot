@@ -1,187 +1,180 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CtaBand from '../components/CtaBand';
 import styles from './Home.module.css';
 
 const DOMAINS = [
   {
-    icon: '⚡',
+    id: 'energie',
+    num: '01',
     title: 'Énergie & Électricité',
-    items: ['Installations solaires', 'Pompage solaire', 'Éclairage public', 'Tableaux électriques', 'Groupes électrogènes'],
+    desc: 'Solaire, courant fort/faible, tableaux TGBT, éclairage, mise aux normes SENELEC.',
+    items: ['Panneaux solaires & stockage', 'Électricité bâtiment & industrielle', 'Armoires et tableaux de commande', 'Mise aux normes & audits'],
   },
   {
-    icon: '❄️',
+    id: 'clim',
+    num: '02',
     title: 'Climatisation & Maintenance',
-    items: ['Climatisation', 'Froid industriel', 'Entretien & dépannage', 'Maintenance préventive', 'Contrats de maintenance'],
+    desc: 'Systèmes split, VRV, VMC et contrats de maintenance préventive et curative.',
+    items: ['Climatiseurs split & multi-split', 'Systèmes VRV / VRF centralisés', 'Ventilation mécanique contrôlée', 'Maintenance préventive & curative'],
   },
   {
-    icon: '🔧',
+    id: 'plomb',
+    num: '03',
     title: 'Plomberie & Étanchéité',
-    items: ['Plomberie bâtiment', 'Réseaux d\'eau', 'Sanitaires', 'Étanchéité toitures', 'Traitement infiltrations'],
+    desc: 'Réseaux sanitaires, alimentation eau, étanchéité toiture et façades.',
+    items: ['Réseaux eau froide & eau chaude', 'Appareils sanitaires & robinetterie', 'Étanchéité toiture-terrasse', 'Traitement des infiltrations'],
   },
   {
-    icon: '🏗️',
+    id: 'btp',
+    num: '04',
     title: 'BTP & Services Techniques',
-    items: ['Rénovation bâtiments', 'Petits travaux', 'Travaux d\'aménagement', 'Études techniques', 'Assistance & conseil'],
+    desc: 'Gros œuvre, second œuvre, travaux de finition et construction clé en main.',
+    items: ['Gros œuvre & maçonnerie', 'Cloisons, faux-plafonds, revêtements', 'Menuiserie aluminium & PVC', 'Construction clé en main'],
   },
 ];
 
-const WHY = [
-  { n: '01', title: 'Qualité', desc: 'Des prestations conformes aux normes, avec des matériaux et équipements sélectionnés pour leur durabilité et leur performance.' },
-  { n: '02', title: 'Sécurité', desc: 'Le respect des règles et normes de sécurité est non-négociable. Chaque intervention protège nos équipes et nos clients.' },
-  { n: '03', title: 'Innovation', desc: 'Des solutions techniques modernes, efficaces et adaptées aux réalités et aux besoins spécifiques de nos clients.' },
-  { n: '04', title: 'Engagement', desc: 'Un partenaire fiable, disponible et à votre écoute — avant, pendant et après chaque intervention.' },
+const STATS = [
+  { n: 250, suffix: '+', label: 'Projets livrés' },
+  { n: 8, suffix: ' ans', label: "d'expérience" },
+  { n: 4, suffix: '', label: 'Domaines d\'expertise' },
+  { n: 100, suffix: '%', label: 'Satisfaction client' },
 ];
 
-const VALUES = [
-  { icon: '🏆', title: 'Expertise', sub: 'Une équipe qualifiée et expérimentée.' },
-  { icon: '⚡', title: 'Performance', sub: 'Des solutions efficaces et durables.' },
-  { icon: '⏱️', title: 'Respect des délais', sub: 'Organisation rigoureuse pour livrer dans les temps.' },
-  { icon: '🌱', title: 'Durabilité', sub: 'Interventions responsables pour un impact positif.' },
-];
+function useCountUp(target, active) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let start = 0;
+    const step = Math.ceil(target / 40);
+    const id = setInterval(() => {
+      start += step;
+      if (start >= target) { setVal(target); clearInterval(id); }
+      else setVal(start);
+    }, 30);
+    return () => clearInterval(id);
+  }, [active, target]);
+  return val;
+}
 
-const TESTIMONIALS = [
-  { initials: 'AM', q: '« SPOT a installé notre système solaire en 5 jours. Travail soigné, équipe professionnelle. Nos factures ont baissé de 70%. Je recommande vivement. »', name: 'Amadou Mbodj', role: 'Directeur, Hôtel Les Flamboyants · Saly' },
-  { initials: 'FK', q: '« Installation électrique complète de notre entrepôt à Diamniadio. Délais respectés, devis précis, pas de mauvaises surprises. »', name: 'Fatou Konaté', role: 'Responsable technique, DHL Sénégal' },
-  { initials: 'PS', q: '« Mise aux normes complète de notre villa. Le chef de chantier a été très professionnel et pédagogique. SPOT les yeux fermés. »', name: 'Papa Saliou Ndiaye', role: 'Particulier · Almadies, Dakar' },
-];
+function StatItem({ n, suffix, label }) {
+  const ref = useRef(null);
+  const [active, setActive] = useState(false);
+  const val = useCountUp(n, active);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setActive(true); obs.disconnect(); } },
+      { threshold: 0.5 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={styles.statItem}>
+      <div className={styles.statN}>{val}{suffix}</div>
+      <div className={styles.statL}>{label}</div>
+    </div>
+  );
+}
 
 export default function Home() {
   const navigate = useNavigate();
+  const [activeDomain, setActiveDomain] = useState(0);
 
   return (
     <main>
       <section className={styles.hero}>
+        <div className={styles.heroGrid} aria-hidden="true" />
+        <div className={styles.heroGlow} aria-hidden="true" />
         <div className={styles.heroInner}>
-          <div className={styles.heroLeft}>
-            <div className={styles.heroTag}>Dakar, Sénégal · Intervention rapide partout au Sénégal</div>
-            <h1 className={styles.h1}>
-              L'excellence technique<br />
-              <span className={styles.h1Em}>au service</span><br />
-              de vos projets.
-            </h1>
-            <p className={styles.heroP}>
-              SPOT accompagne les particuliers, entreprises, industries et institutions avec des solutions techniques fiables, durables et adaptées à leurs besoins.
-            </p>
-            <div className={styles.heroBtns}>
-              <button className={styles.btnPrimary} onClick={() => navigate('/contact')}>
-                Demander un devis gratuit
-              </button>
-              <button className={styles.btnSecondary} onClick={() => navigate('/realisations')}>
-                Voir nos réalisations
+          <div className={styles.heroPill}>Dakar, Sénégal</div>
+          <h1 className={styles.heroTitle}>
+            <span className={styles.heroLine1}>Solutions</span>
+            <span className={styles.heroLine2}>Techniques</span>
+            <span className={styles.heroLine3}>Polyvalentes.</span>
+          </h1>
+          <p className={styles.heroSub}>
+            SPOT intervient sur vos chantiers en énergie, climatisation, plomberie et BTP — de l'étude à la livraison clé en main.
+          </p>
+          <div className={styles.heroCtas}>
+            <button className={styles.heroBtn} onClick={() => navigate('/contact')}>
+              Demander un devis gratuit
+            </button>
+            <button className={styles.heroLink} onClick={() => navigate('/realisations')}>
+              Voir nos projets
+            </button>
+          </div>
+        </div>
+        <div className={styles.scrollHint} aria-hidden="true">
+          <span />
+        </div>
+      </section>
+
+      <section className={styles.statsSection}>
+        <div className={styles.inner}>
+          <div className={styles.statsRow}>
+            {STATS.map((s) => <StatItem key={s.label} {...s} />)}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.domainsSection}>
+        <div className={styles.inner}>
+          <div className={styles.domainsSplit}>
+            <div className={styles.domainsLeft}>
+              <p className={styles.sectionEye}>Nos expertises</p>
+              <h2 className={styles.sectionH2}>Quatre domaines,<br />une seule équipe.</h2>
+              <p className={styles.sectionP}>
+                De l'étude technique à la mise en service, SPOT vous accompagne à chaque étape avec des équipes spécialisées par métier.
+              </p>
+              <button className={styles.sectionBtn} onClick={() => navigate('/services')}>
+                Découvrir nos services
               </button>
             </div>
-            <div className={styles.stats}>
-              {[
-                { n: '250+', l: 'Projets réalisés' },
-                { n: '8 ans', l: "d'expérience" },
-                { n: '4', l: 'domaines d\'activité' },
-              ].map(({ n, l }) => (
-                <div key={l}>
-                  <div className={styles.statN}>{n}</div>
-                  <div className={styles.statL}>{l}</div>
-                </div>
+            <div className={styles.domainsRight}>
+              {DOMAINS.map((d, i) => (
+                <button
+                  key={d.id}
+                  className={`${styles.domainRow} ${activeDomain === i ? styles.domainActive : ''}`}
+                  onClick={() => setActiveDomain(i)}
+                >
+                  <span className={styles.domainNum}>{d.num}</span>
+                  <div className={styles.domainContent}>
+                    <div className={styles.domainTitle}>{d.title}</div>
+                    {activeDomain === i && (
+                      <div className={styles.domainExpand}>
+                        <p className={styles.domainDesc}>{d.desc}</p>
+                        <ul className={styles.domainItems}>
+                          {d.items.map((it) => <li key={it}>{it}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                  <span className={styles.domainArrow}>{activeDomain === i ? '−' : '+'}</span>
+                </button>
               ))}
             </div>
           </div>
-
-          <div className={styles.bento}>
-            <div className={`${styles.bentoCard} ${styles.bentoDark}`}>
-              <div className={styles.bentoIcon}>⚡</div>
-              <div className={`${styles.bentoTitle} ${styles.bentoTitleWhite}`}>Énergie & Électricité</div>
-              <div className={`${styles.bentoSub} ${styles.bentoSubWhite}`}>Solaire, éclairage, tableaux, groupes électrogènes</div>
-            </div>
-            <div className={`${styles.bentoCard} ${styles.bentoPale}`}>
-              <div className={styles.bentoIcon}>❄️</div>
-              <div className={`${styles.bentoTitle} ${styles.bentoTitleDark}`}>Climatisation</div>
-              <div className={`${styles.bentoSub} ${styles.bentoSubMuted}`}>Froid & maintenance</div>
-            </div>
-            <div className={`${styles.bentoCard} ${styles.bentoPale}`}>
-              <div className={styles.bentoIcon}>🔧</div>
-              <div className={`${styles.bentoTitle} ${styles.bentoTitleDark}`}>Plomberie</div>
-              <div className={`${styles.bentoSub} ${styles.bentoSubMuted}`}>Réseaux & étanchéité</div>
-            </div>
-            <div className={`${styles.bentoCard} ${styles.bentoPale} ${styles.bentoSpan2}`}>
-              <div className={styles.bentoIcon}>🏗️</div>
-              <div className={`${styles.bentoTitle} ${styles.bentoTitleDark}`}>BTP & Services Techniques</div>
-              <div className={`${styles.bentoSub} ${styles.bentoSubMuted}`}>Rénovation, construction, études techniques et conseil</div>
-            </div>
-          </div>
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.sectionBlanc}`}>
+      <section className={styles.whySection}>
         <div className={styles.inner}>
-          <div className={styles.secHd}>
-            <div className={styles.secTag}>Nos domaines d'activité</div>
-            <h2 className={styles.secH2}>Quatre expertises,<br />une seule équipe.</h2>
-            <p className={styles.secDesc}>De l'étude à la mise en service, SPOT vous accompagne à chaque étape de vos projets techniques.</p>
-          </div>
-          <div className={styles.domainsGrid}>
-            {DOMAINS.map((d) => (
-              <div key={d.title} className={styles.domainCard}>
-                <div className={styles.domainIconWrap}>{d.icon}</div>
-                <div className={styles.domainTitle}>{d.title}</div>
-                <ul className={styles.domainList}>
-                  {d.items.map((item) => <li key={item}>{item}</li>)}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.valueBand}>
-        <div className={styles.valueGrid}>
-          {VALUES.map((v) => (
-            <div key={v.title} className={styles.valueItem}>
-              <div className={styles.valueIcon}>{v.icon}</div>
-              <div className={styles.valueTitle}>{v.title}</div>
-              <div className={styles.valueSub}>{v.sub}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className={`${styles.section} ${styles.sectionGris}`}>
-        <div className={styles.inner}>
-          <div className={styles.secHd}>
-            <div className={styles.secTag}>Pourquoi SPOT</div>
-            <h2 className={styles.secH2}>Ce qui nous distingue.</h2>
-            <p className={styles.secDesc}>Fiabilité, expertise locale et réactivité — nos engagements envers chaque client.</p>
-          </div>
+          <p className={styles.sectionEye}>Pourquoi SPOT</p>
+          <h2 className={styles.sectionH2}>Ce qui nous distingue.</h2>
           <div className={styles.whyGrid}>
-            {WHY.map((c) => (
-              <div key={c.n} className={styles.whyCard}>
-                <div className={styles.whyNum}>{c.n}</div>
-                <div>
-                  <div className={styles.whyTitle}>{c.title}</div>
-                  <div className={styles.whyDesc}>{c.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={`${styles.section} ${styles.sectionBlanc}`}>
-        <div className={styles.inner}>
-          <div className={styles.secHd}>
-            <div className={styles.secTag}>Témoignages</div>
-            <h2 className={styles.secH2}>Ce que disent nos clients.</h2>
-          </div>
-          <div className={styles.testiGrid}>
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className={styles.testiCard}>
-                <div className={styles.stars}>★★★★★</div>
-                <p className={styles.testiQ}>{t.q}</p>
-                <div className={styles.testiAuthor}>
-                  <div className={styles.testiAv}>{t.initials}</div>
-                  <div>
-                    <div className={styles.testiName}>{t.name}</div>
-                    <div className={styles.testiRole}>{t.role}</div>
-                  </div>
-                </div>
+            {[
+              { t: 'Expertise locale', d: 'Techniciens formés sur le terrain sénégalais, matériaux adaptés au climat et aux normes locales.' },
+              { t: 'Devis en 48h', d: 'Étude technique gratuite et devis détaillé remis en 48 heures, sans frais cachés.' },
+              { t: 'Garantie 2 ans', d: 'Garantie main-d\'œuvre sur toutes nos installations. SAV disponible sous 24h.' },
+              { t: 'Clé en main', d: 'Un seul interlocuteur pour l\'ensemble du projet, du diagnostic à la réception des travaux.' },
+            ].map(({ t, d }) => (
+              <div key={t} className={styles.whyCard}>
+                <div className={styles.whyBar} aria-hidden="true" />
+                <div className={styles.whyTitle}>{t}</div>
+                <div className={styles.whyDesc}>{d}</div>
               </div>
             ))}
           </div>
@@ -190,7 +183,7 @@ export default function Home() {
 
       <CtaBand
         title="Votre projet mérite une expertise solide."
-        subtitle="Étude technique gratuite — réponse sous 48 heures partout au Sénégal."
+        subtitle="Étude technique gratuite, devis précis sous 48 heures."
       />
     </main>
   );

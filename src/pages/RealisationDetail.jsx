@@ -1,11 +1,12 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import CtaBand from '../components/CtaBand';
+import { useParams, useNavigate } from 'react-router-dom';
 import { PROJECTS, DOMAINES } from '../data/projects';
+import CtaBand from '../components/CtaBand';
 import styles from './RealisationDetail.module.css';
 
 export default function RealisationDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const project = PROJECTS.find((p) => p.id === id);
 
   if (!project) {
@@ -13,126 +14,107 @@ export default function RealisationDetail() {
       <main className={styles.notFound}>
         <div className={styles.notFoundInner}>
           <div className={styles.notFoundCode}>404</div>
-          <div className={styles.notFoundMsg}>Projet introuvable.</div>
-          <Link to="/realisations" className={styles.backBtn}>← Retour aux réalisations</Link>
+          <h1 className={styles.notFoundTitle}>Projet introuvable</h1>
+          <p className={styles.notFoundDesc}>Ce projet n'existe pas ou a été retiré.</p>
+          <button className={styles.backBtn} onClick={() => navigate('/realisations')}>
+            ← Voir tous les projets
+          </button>
         </div>
       </main>
     );
   }
 
-  const domaine = DOMAINES[project.domaine];
-  const others = PROJECTS.filter((p) => p.id !== project.id && p.domaine === project.domaine).slice(0, 3);
+  const related = PROJECTS.filter((p) => p.domaine === project.domaine && p.id !== project.id).slice(0, 3);
 
   return (
     <main>
       <div className={styles.hero}>
         <div className={styles.heroInner}>
-          <Link to="/realisations" className={styles.back}>← Toutes les réalisations</Link>
-          <div className={styles.heroTag} style={{ background: domaine?.color }}>{domaine?.label}</div>
-          <h1 className={styles.heroTitle}>{project.titre}</h1>
+          <button className={styles.back} onClick={() => navigate('/realisations')}>
+            ← Réalisations
+          </button>
           <div className={styles.heroMeta}>
-            <span>{project.lieu}</span>
-            <span>·</span>
-            <span>{project.annee}</span>
-            {project.surface !== '—' && (
-              <>
-                <span>·</span>
-                <span>{project.surface}</span>
-              </>
-            )}
+            <span className={styles.heroDomain}>{DOMAINES[project.domaine]?.label}</span>
+            <span className={styles.heroYear}>{project.annee}</span>
           </div>
+          <h1 className={styles.heroTitle}>{project.titre}</h1>
+          <div className={styles.heroLieu}>{project.lieu}</div>
+          {project.surface !== '—' && (
+            <div className={styles.heroSurface}>{project.surface}</div>
+          )}
         </div>
+        <div className={styles.heroImg} aria-hidden="true" />
       </div>
 
-      <div className={styles.body}>
-        <div className={styles.bodyInner}>
-          <div className={styles.mainCol}>
-            <div className={styles.imgBlock}>
-              <div className={styles.imgPlaceholder}>
-                {project.domaine === 'energie' && '⚡'}
-                {project.domaine === 'clim' && '❄️'}
-                {project.domaine === 'plomb' && '🔧'}
-                {project.domaine === 'btp' && '🏗️'}
-              </div>
-            </div>
+      <div className={styles.layout}>
+        <div className={styles.layoutInner}>
+          <div className={styles.main}>
+            <section className={styles.descSection}>
+              <h2 className={styles.sectionTitle}>Le projet</h2>
+              <p className={styles.descText}>{project.desc}</p>
+            </section>
 
-            <div className={styles.section}>
-              <div className={styles.sectionLabel}>Présentation du projet</div>
-              <p className={styles.sectionText}>{project.desc}</p>
-            </div>
-
-            <div className={styles.section}>
-              <div className={styles.sectionLabel}>Détails de l'intervention</div>
-              <p className={styles.sectionText}>{project.details}</p>
-            </div>
+            <section className={styles.detailSection}>
+              <h2 className={styles.sectionTitle}>Détails techniques</h2>
+              <p className={styles.detailText}>{project.details}</p>
+            </section>
           </div>
 
           <aside className={styles.sidebar}>
             <div className={styles.sideCard}>
-              <div className={styles.sideTitle}>Informations</div>
-              <div className={styles.sideRow}>
-                <span className={styles.sideKey}>Lieu</span>
-                <span className={styles.sideVal}>{project.lieu}</span>
-              </div>
-              <div className={styles.sideRow}>
-                <span className={styles.sideKey}>Année</span>
-                <span className={styles.sideVal}>{project.annee}</span>
-              </div>
-              {project.surface !== '—' && (
-                <div className={styles.sideRow}>
-                  <span className={styles.sideKey}>Surface</span>
-                  <span className={styles.sideVal}>{project.surface}</span>
-                </div>
-              )}
-              <div className={styles.sideRow}>
-                <span className={styles.sideKey}>Domaine</span>
-                <span className={styles.sideVal}>{domaine?.label}</span>
-              </div>
+              <div className={styles.sideLabel}>Domaine</div>
+              <div className={styles.sideValue}>{DOMAINES[project.domaine]?.label}</div>
             </div>
-
             <div className={styles.sideCard}>
-              <div className={styles.sideTitle}>Tags</div>
-              <div className={styles.tagList}>
-                {project.tags.map((t) => (
-                  <span key={t} className={styles.tag}>{t}</span>
-                ))}
-              </div>
+              <div className={styles.sideLabel}>Année</div>
+              <div className={styles.sideValue}>{project.annee}</div>
             </div>
-
-            <Link to="/contact" className={styles.contactBtn}>
-              Discuter d'un projet similaire →
-            </Link>
+            <div className={styles.sideCard}>
+              <div className={styles.sideLabel}>Lieu</div>
+              <div className={styles.sideValue}>{project.lieu}</div>
+            </div>
+            {project.surface !== '—' && (
+              <div className={styles.sideCard}>
+                <div className={styles.sideLabel}>Surface</div>
+                <div className={styles.sideValue}>{project.surface}</div>
+              </div>
+            )}
+            <div className={styles.sideTags}>
+              {project.tags.map((t) => (
+                <span key={t} className={styles.sideTag}>{t}</span>
+              ))}
+            </div>
+            <button className={styles.sideBtn} onClick={() => navigate('/contact')}>
+              Projet similaire ?
+            </button>
           </aside>
         </div>
       </div>
 
-      {others.length > 0 && (
-        <div className={styles.related}>
+      {related.length > 0 && (
+        <section className={styles.related}>
           <div className={styles.relatedInner}>
-            <div className={styles.relatedLabel}>Projets similaires</div>
+            <h2 className={styles.relatedTitle}>Autres projets en {DOMAINES[project.domaine]?.label}</h2>
             <div className={styles.relatedGrid}>
-              {others.map((p) => (
-                <Link key={p.id} to={`/realisations/${p.id}`} className={styles.relCard}>
-                  <div className={styles.relImg}>
-                    {p.domaine === 'energie' && '⚡'}
-                    {p.domaine === 'clim' && '❄️'}
-                    {p.domaine === 'plomb' && '🔧'}
-                    {p.domaine === 'btp' && '🏗️'}
-                  </div>
-                  <div className={styles.relBody}>
-                    <div className={styles.relTitle}>{p.titre}</div>
-                    <div className={styles.relMeta}>{p.lieu} · {p.annee}</div>
-                  </div>
-                </Link>
+              {related.map((p) => (
+                <button
+                  key={p.id}
+                  className={styles.relatedCard}
+                  onClick={() => navigate(`/realisations/${p.id}`)}
+                >
+                  <div className={styles.relatedCardImg} aria-hidden="true" />
+                  <div className={styles.relatedCardTitle}>{p.titre}</div>
+                  <div className={styles.relatedCardLieu}>{p.lieu} · {p.annee}</div>
+                </button>
               ))}
             </div>
           </div>
-        </div>
+        </section>
       )}
 
       <CtaBand
-        title="Vous avez un projet similaire ?"
-        subtitle="Contactez-nous pour une étude technique gratuite."
+        title="Ce type de projet vous intéresse ?"
+        subtitle="Décrivez-nous votre besoin, nous vous répondons sous 48h."
       />
     </main>
   );
