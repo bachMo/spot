@@ -48,3 +48,13 @@
   max-width: 560px;
   line-height: 1.65;
 }
+
+@media (max-width: 768px) {
+  .hero { padding-top: 108px; padding-bottom: 56px; }
+  .title { font-size: clamp(28px, 8vw, 48px); }
+  .subtitle { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding-top: 96px; padding-bottom: 48px; }
+}

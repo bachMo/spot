@@ -146,7 +146,13 @@ a.infoValue:hover { color: var(--orange); }
 }
 
 @media (max-width: 800px) {
-  .layout { grid-template-columns: 1fr; }
+  .section { padding: 48px 0 72px; }
+  .layout { grid-template-columns: 1fr; gap: 40px; }
   .info { position: static; }
-  .row { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr; gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .submit { width: 100%; text-align: center; }
+  .input, .select, .textarea { padding: 12px 14px; font-size: 14px; }
 }

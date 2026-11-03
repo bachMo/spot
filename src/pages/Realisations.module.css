@@ -133,5 +133,14 @@
   font-size: 16px;
 }
 
-@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .section { padding: 48px 0 72px; }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .filterBar { gap: 6px; }
+  .filterBtn { padding: 6px 14px; font-size: 12px; }
+  .cardBody { padding: 16px 20px 24px; }
+}

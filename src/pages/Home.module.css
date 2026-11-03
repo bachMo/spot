@@ -392,10 +392,22 @@
   .domainsSplit { grid-template-columns: 1fr; gap: 48px; }
   .domainsLeft { position: static; }
   .statsRow { grid-template-columns: repeat(2, 1fr); }
+  .domainsSection { padding: 64px var(--gutter); }
+  .whySection { padding: 64px var(--gutter); }
+}
+
+@media (max-width: 768px) {
+  .heroInner { padding-top: 96px; padding-bottom: 64px; }
+  .statsSection { padding: 32px var(--gutter); }
+  .statItem { padding: 24px 16px; }
 }
 
 @media (max-width: 560px) {
-  .heroLine1, .heroLine2, .heroLine3 { font-size: clamp(44px, 13vw, 72px); }
+  .heroLine1, .heroLine2, .heroLine3 { font-size: clamp(40px, 13vw, 72px); }
+  .heroSub { font-size: 14px; }
+  .heroCtas { gap: 8px; }
+  .heroBtn, .heroLink { padding: 12px 20px; font-size: 13px; }
   .whyGrid { grid-template-columns: 1fr; }
   .statsRow { grid-template-columns: repeat(2, 1fr); }
+  .sectionH2 { font-size: clamp(24px, 7vw, 36px); }
 }

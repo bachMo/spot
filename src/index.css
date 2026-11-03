@@ -37,6 +37,14 @@
   --shadow: 0 4px 24px rgba(0,0,0,0.10);
 }
 
+:root {
+  --max: 1200px;
+  --gutter: clamp(16px, 5vw, 80px);
+  --t: 0.18s ease;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --r: 8px;
+}
+
 html { scroll-behavior: smooth; }
 
 body {

@@ -255,14 +255,18 @@
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .heroImg { display: none; }
-  .layoutInner { grid-template-columns: 1fr; }
+  .layoutInner { grid-template-columns: 1fr; gap: 40px; }
   .sidebar { flex-direction: row; flex-wrap: wrap; }
   .sideCard { flex: 1 1 140px; }
   .sideTags { width: 100%; }
   .sideBtn { width: 100%; }
   .relatedGrid { grid-template-columns: 1fr 1fr; }
+  .layout { padding: 48px 0 64px; }
+  .related { padding: 48px 0; }
 }
 
 @media (max-width: 600px) {
   .relatedGrid { grid-template-columns: 1fr; }
+  .heroTitle { font-size: clamp(24px, 7vw, 36px); }
+  .sideCard { flex: 1 1 120px; }
 }
